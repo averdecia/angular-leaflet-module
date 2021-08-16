@@ -1,18 +1,36 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import * as L from 'leaflet';
-import { MapsUtils, CountryCode, Place } from '../../../utils/maps'
+import { MapsUtils, CountryCode, Place, ZoomPosition } from '../../utils/maps'
 
 @Component({
   selector: 'app-map-view',
   templateUrl: './map-view.component.html',
   styleUrls: ['./map-view.component.scss']
 })
-export class MapViewComponent implements OnInit {
+export class MapViewComponent {
 
+  /**
+   * @param extraOptions parameter will allow adding extra map options from outside
+   */
   @Input('extraOptions') extraOptions = {}
+  /**
+   * @param onPlaceClick is a function that will be executed on popup click
+   */
   @Input('onPlaceClick') onPlaceClick = (e) => console.log(e)
+  /**
+   * @param height allows to change the height on the view, the width is always 100%
+   */
   @Input('height') viewHeight: string = '80vh'
+  /**
+   * @param country The country is necessary to set the center view
+   */
   @Input('country') country: CountryCode = CountryCode.MX
+  /**
+   * @param zoomPosition Allow to change zoom control positions.
+   * Posible values can be found in https://leafletjs.com/reference-1.7.1.html#control-position
+   */
+  @Input('zoomPosition') zoomPosition: ZoomPosition = ZoomPosition.BOTTOM_RIGHT
+
   markers: L.Marker<any>[] = []
   general: L.TileLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18, attribution: '...' })
   options:  any = {}
@@ -23,18 +41,17 @@ export class MapViewComponent implements OnInit {
     this.initOptions(this.country)
    }
 
-  ngOnInit(): void {
-  }
-
   /**
-   * Event used to show all popups as visible on start
+   * Event used to show execute actions when mapsis ready on the view
    * @param e event
    */
   onMapReady(e){
-    console.log(e)
+    // Adding zoom controlt the bottomright
     L.control.zoom({
-      position: 'bottomright'
+      position: this.zoomPosition
     }).addTo(e);
+
+    // Openning popups by default
     this.markers.map(el => {
       el.openPopup()
     });
@@ -69,7 +86,8 @@ export class MapViewComponent implements OnInit {
       layers: [this.general, ...this.markers],
       zoom: 5,
       zoomControl: false,
-      center: L.latLng(MapsUtils.getCountryCenter(country).long, MapsUtils.getCountryCenter(country).lat)
+      center: L.latLng(
+        MapsUtils.getCountryCenter(country).GPSLongitude, MapsUtils.getCountryCenter(country).GPSLatitude)
     }, this.extraOptions)
   }
 
@@ -79,6 +97,7 @@ export class MapViewComponent implements OnInit {
    * @returns The url to the image
    */
   buildThumbnailUrl(place: Place): string {
+    // TODO: Use the right service for the photo
     return "./assets/testImage.jpeg"
   }
 

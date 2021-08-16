@@ -10,21 +10,30 @@ import { MapsUtils, CountryCode, Place, ZoomPosition } from '../../utils/maps'
 export class MapViewComponent {
 
   /**
+   * @param places allows you to send the list of places to show
+   */
+   @Input('places') places: Place[] = MapsUtils.getPlaces()
+
+  /**
    * @param extraOptions parameter will allow adding extra map options from outside
    */
   @Input('extraOptions') extraOptions = {}
+
   /**
    * @param onPlaceClick is a function that will be executed on popup click
    */
   @Input('onPlaceClick') onPlaceClick = (e) => console.log(e)
+
   /**
    * @param height allows to change the height on the view, the width is always 100%
    */
   @Input('height') viewHeight: string = '80vh'
+
   /**
    * @param country The country is necessary to set the center view
    */
   @Input('country') country: CountryCode = CountryCode.MX
+
   /**
    * @param zoomPosition Allow to change zoom control positions.
    * Posible values can be found in https://leafletjs.com/reference-1.7.1.html#control-position

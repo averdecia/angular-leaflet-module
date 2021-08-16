@@ -1,0 +1,24 @@
+[
+  {
+      "GPSLatitude": "-88.3397983",
+   "GPSLongitude": "18.5221567",
+    "place": "Chetumal, Quintana Roo",
+     "files_count": 2,
+   "files_first": 2345
+  },
+  {
+    "GPSLatitude": "-99.9323494",
+     "GPSLongitude": "16.8354485",
+    "place": "Acapulco, Guerrero",
+     "files_count": 4,
+     "files_first": 2349
+  },
+ {
+    "GPSLatitude": "-89.7730056",
+     "GPSLongitude": "20.9800083",
+    "place": "Merida, Yucatan",
+     "files_count": 1,
+     "files_first": 2545
+  }
+
+]

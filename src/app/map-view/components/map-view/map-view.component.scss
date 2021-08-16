@@ -1,0 +1,47 @@
+:host {
+  width: 100%;
+}
+
+// Popup Design
+:host ::ng-deep .leaflet-popup {
+  margin-bottom: 5px;
+  .leaflet-popup-content-wrapper{
+    border-radius: 1px;
+    .leaflet-popup-content{
+      margin: 3px;
+      height: 60px;
+      width: 60px;
+      img.map-thumbnail-img {
+        width: 60px;
+        height: 60px;
+        border-radius: 1px;
+      }
+      strong.map-thumbnail-number {
+        border-radius: 50%;
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        color: white;
+        width: 25px;
+        height: 20px;
+        text-align: center;
+        padding-top: 5px;
+        background-color: #1177cc;
+      }
+    }
+  }
+  .leaflet-popup-tip-container {
+    .leaflet-popup-tip{
+      width: 10px;
+      height: 10px;
+    }
+  }
+}
+
+// Disable leaflet attribution
+:host ::ng-deep .leaflet-control-container {
+  div div.leaflet-control-attribution {
+    display: none;
+  }
+}
+
